@@ -1,5 +1,6 @@
-import { Body, Controller, Headers, Post, Session } from '@nestjs/common';
+import { Body, Controller, Headers, Post, Session, UsePipes } from '@nestjs/common';
 import { ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ValidationPipe } from 'src/pipes/validation.pipe';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { ErrorDto } from 'src/users/dto/error.dto';
 import { ResponceCreateUserDto } from 'src/users/dto/responce-create-user.dto';
@@ -24,6 +25,7 @@ export class AuthController {
     @ApiOperation({summary:'Створення користувача'})
     @ApiResponse({status:201,description:'Користувач успішно створений',type:ResponceCreateUserDto})
     @ApiResponse({status:400,type:ErrorDto})
+    @UsePipes(ValidationPipe)
     @Post('/register')
     register(@Body() dto:CreateUserDto){
         const user=this.authService.register(dto)

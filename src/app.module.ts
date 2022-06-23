@@ -3,10 +3,12 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { configOpt } from './options/config';
+import { configOpt } from './utils/options/config';
 import { User } from './users/users.model';
-import { WinstonModule } from 'nest-winston';
-import { winstonOpt } from './options/winston';
+import { MessagesController } from './messages/messages.controller';
+import { MessagesModule } from './messages/messages.module';
+import { RoomsService } from './rooms/rooms.service';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   controllers: [],
@@ -23,11 +25,13 @@ import { winstonOpt } from './options/winston';
       models: [User],
       autoLoadModels: true
     }),
-    WinstonModule.forRoot(winstonOpt),
 
     UsersModule,
 
-    AuthModule
+    AuthModule,
+
+    MessagesModule,
+
   ],
 })
 export class AppModule { }

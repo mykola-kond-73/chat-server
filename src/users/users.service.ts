@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './users.model';
@@ -35,6 +35,7 @@ export class UsersService {
             else throw new HttpException('', HttpStatus.BAD_REQUEST)
         } catch (error) {
             throw new HttpException('Користувача не знайдено', HttpStatus.BAD_REQUEST)
+    
         }
     }
 

@@ -16,7 +16,7 @@ export class User extends Model<User,UserCreateAttrs>{
     @Column({type:DataType.STRING,unique:true,primaryKey:true})
     id:string
 
-    @ApiProperty({example:'user_1@email.com',description:'Логін користувача'})
+    @ApiProperty({example:'user_1@emal.com',description:'Логін/електронна адреса користувача'})
     @Column({type:DataType.STRING,unique:true,allowNull:false})
     email:string
 

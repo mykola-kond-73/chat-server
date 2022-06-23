@@ -42,11 +42,6 @@ const errorLogger = new Logger('error', 'errors.log').create()
 const validationErrorLogger = new Logger('error', 'validation_errors.log').create()
 const authErrorLogger = new Logger('error', 'auth_errors.log').create()
 
-//todo authErrorLogger.error(`${req.originalUrl} ${req.ip} ${token}`)
-//todo validationErrorLogger.error(`${req.method} ${req.originalUrl} ${JSON.stringify(req.body)}`)
-//todo queryLogger.log('info',`${req.protocol} ${req.method} ${req.originalUrl} ${req.sessionID} ${req.ip}`)
-
-
 export {
     queryLogger,
     errorLogger,
