@@ -14,7 +14,7 @@ export class AuthController {
     }
 
     @ApiOperation({summary:'Авторизація користувача'})
-    @ApiHeader({name: 'Authorization',description: 'Заголовок з логіном і паролем для авторизації',example:'user_1@email.com:user_password',required:true})
+    @ApiHeader({name: 'Authorization',description: 'Заголовок з логіном і паролем для авторизації',required:true,example:'user_1@email.com:user_password'})
     @ApiResponse({status:200,description:'Створено сесію з токеном'})
     @ApiResponse({status:400,type:ErrorDto})
     @Post('/login')

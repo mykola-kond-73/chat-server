@@ -9,6 +9,7 @@ import { MessagesController } from './messages/messages.controller';
 import { MessagesModule } from './messages/messages.module';
 import { RoomsService } from './rooms/rooms.service';
 import { RoomsModule } from './rooms/rooms.module';
+import { Message } from './messages/messages.model';
 
 @Module({
   controllers: [],
@@ -22,7 +23,7 @@ import { RoomsModule } from './rooms/rooms.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASS,
       database: process.env.POSTGRES_DB,
-      models: [User],
+      models: [User,Message],
       autoLoadModels: true
     }),
 

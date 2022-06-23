@@ -1,6 +1,6 @@
 import { UsersService } from './users.service';
 import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUserDto } from './dto/get-user.dto';
 import { ErrorDto } from './dto/error.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -15,6 +15,7 @@ export class UsersController {
     }
 
     @ApiOperation({summary:'Запит користувача за його Id'})
+    @ApiParam({name:'userId',description:'Id користувача',required:true,example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'})
     @ApiResponse({status:200,description:'Користувач успішно створений',type:GetUserDto})
     @ApiResponse({status:400,type:ErrorDto})
     @Get(':userId')
@@ -23,6 +24,7 @@ export class UsersController {
     }
 
     @ApiOperation({summary:'Видалити користувача за його Id'})
+    @ApiParam({name:'userId',description:'Id користувача',required:true,example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'})
     @ApiResponse({status:200})
     @ApiResponse({status:400,type:ErrorDto})
     @Delete(':userId')

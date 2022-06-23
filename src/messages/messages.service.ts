@@ -29,12 +29,11 @@ export class MessagesService {
 
     async getMessagesByRoomId({ roomId, page, count }: getMessagesByRoomIdType) {
         try {
-
             const messages = await this.messageRepository.findAll({ 
                 where: { roomId }, 
                 offset: (page - 1) * count, 
                 limit: count,
-                attributes: ['id','authorId','roomId','message','createdDate','isUpdate'] 
+                attributes: ['id','authorId','roomId','message','createdDate','isUpdate'],
             })
             
             if (messages.length != 0) return messages
@@ -43,23 +42,20 @@ export class MessagesService {
             throw new HttpException('Повідомлення для такої кімнати не знайдені', HttpStatus.BAD_REQUEST)
         }
     }
-    //!================================================================================================================================================
     async updateMessageById(payload: updateMessageByIdType) {
         try {
-
             const message = await this.messageRepository.update(
                 {
                     isUpdate: true,
                     message: payload.newMessage
                 },
                 { where: { id: payload.messageId } })
-            if (message) return message
+            if (message[0]==1) return
             else throw new HttpException('', HttpStatus.BAD_REQUEST)
         } catch (error) {
             throw new HttpException('Невдалося оновити повідомлення', HttpStatus.BAD_REQUEST)
         }
     }
-    //!================================================================================================================================================
     async deleteMessageById(payload:deleteMessageById){
         try{
             const message=await this.messageRepository.destroy({where:{authorId:payload.authorId,id:payload.messageId}})

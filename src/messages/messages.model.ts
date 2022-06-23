@@ -7,6 +7,7 @@ interface MessageCreateAttrs{
     roomId:string    
     message:string
     createdDate:string
+    isUpdate:boolean
 }
 
 @Table({modelName:'messages'})
@@ -32,6 +33,6 @@ export class Message extends Model<Message,MessageCreateAttrs>{
     createdDate:string
 
     @ApiProperty({example:'true',description:'Чи оновлювалось повідомлення'})
-    @Column({type:DataType.DATE,defaultValue:false})
+    @Column({type:DataType.BOOLEAN,defaultValue:false})
     isUpdate:boolean
 }
