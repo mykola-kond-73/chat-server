@@ -4,14 +4,26 @@ import * as session from 'express-session';
 import { sessionOpt } from './options/session'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { DefaultExceptions } from './exceptions/default.exception';
+import { queryLogger } from './utils/logger';
+import helmet from 'helmet'
+import { helmetOpt } from './options/helmet';
+import { corsOpt } from './options/cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { abortOnError: false });
   const PORT = process.env.PORT || 3000
 
   app.use(session(sessionOpt))
-  app.enableCors()
+  app.enableCors(corsOpt)
+  app.use(helmet(helmetOpt))
   app.useGlobalFilters(new DefaultExceptions())
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use('*', (req, res, next) => {
+      queryLogger.log('info', `${req.protocol} ${req.method} ${req.originalUrl} ${req.sessionID} ${req.ip}`)
+      next()
+    })
+  }
 
   const config = new DocumentBuilder()
     .setTitle('Server socket chat API')
@@ -22,7 +34,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('/api/docs', app, document)
 
-  
+
 
   await app.listen(PORT, () => console.log(`server started on port ${PORT}`));
 }
