@@ -5,15 +5,14 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { configOpt } from './utils/options/config';
 import { User } from './users/users.model';
-import { MessagesController } from './messages/messages.controller';
 import { MessagesModule } from './messages/messages.module';
-import { RoomsService } from './rooms/rooms.service';
 import { RoomsModule } from './rooms/rooms.module';
 import { Message } from './messages/messages.model';
+import { SocketsGateway } from './sockets/sockets.gateway';
 
 @Module({
   controllers: [],
-  providers: [],
+  providers: [SocketsGateway],
   imports: [
     ConfigModule.forRoot(configOpt),
     SequelizeModule.forRoot({
@@ -28,11 +27,9 @@ import { Message } from './messages/messages.model';
     }),
 
     UsersModule,
-
     AuthModule,
-
     MessagesModule,
-
+    RoomsModule
   ],
 })
 export class AppModule { }

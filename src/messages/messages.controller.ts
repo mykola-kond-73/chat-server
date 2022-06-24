@@ -1,7 +1,7 @@
 import { getMessagesByRoomIdType, updateMessageByIdType, deleteMessageById } from 'src/utils/types/messages';
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ErrorDto } from 'src/users/dto/error.dto';
+import { ErrorDto } from 'src/exceptions/dto/error.dto';
 import { GetMessagesDto } from './dto/get-messages.dto';
 import { MessagesService } from './messages.service';
 import { UpdateMessageDto } from './dto/update-message.dto';
@@ -18,10 +18,10 @@ export class MessagesController {
 
     }
 
-    @Post()
-    createMessage(@Body() body){
-        return this.messagesService.createMessage(body)
-    }
+    // @Post()
+    // createMessage(@Body() body){
+    //     return this.messagesService.createMessage(body)
+    // }
 
     @ApiOperation({summary:'Запит повідомлень за Id кімнати'})
     @ApiParam({name:'roomId',description:'Id кімнати',required:true,example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'})

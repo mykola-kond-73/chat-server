@@ -2,7 +2,7 @@ import { Body, Controller, Headers, Post, Session, UsePipes } from '@nestjs/comm
 import { ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from 'src/pipes/validation.pipe';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { ErrorDto } from 'src/users/dto/error.dto';
+import { ErrorDto } from 'src/exceptions/dto/error.dto';
 import { ResponceCreateUserDto } from 'src/users/dto/responce-create-user.dto';
 import { AuthService } from './auth.service';
 

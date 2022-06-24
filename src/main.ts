@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { sessionOpt } from './utils/options/session'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { DefaultExceptions } from './utils/exceptions/default.exception';
+import { DefaultExceptions } from './exceptions/default.exception';
 import { queryLogger } from './utils/logger';
 import helmet from 'helmet'
 import { helmetOpt } from './utils/options/helmet';

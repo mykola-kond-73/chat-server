@@ -2,12 +2,12 @@ import { UsersService } from './users.service';
 import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUserDto } from './dto/get-user.dto';
-import { ErrorDto } from './dto/error.dto';
+import { ErrorDto } from '../exceptions/dto/error.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @ApiTags('Користувачі')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
     constructor(private usersService:UsersService){

@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { Room } from "src/rooms/rooms.model";
 
 interface MessageCreateAttrs{
     id:string
@@ -20,10 +21,6 @@ export class Message extends Model<Message,MessageCreateAttrs>{
     @Column({type:DataType.STRING,allowNull:false})
     authorId:string
 
-    @ApiProperty({example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',description:'Id кімнати'})
-    @Column({type:DataType.STRING,allowNull:false})
-    roomId:string    
-
     @ApiProperty({example:'message text',description:'Текст повідомлення'})
     @Column({type:DataType.STRING,allowNull:false})
     message:string
@@ -35,4 +32,8 @@ export class Message extends Model<Message,MessageCreateAttrs>{
     @ApiProperty({example:'true',description:'Чи оновлювалось повідомлення'})
     @Column({type:DataType.BOOLEAN,defaultValue:false})
     isUpdate:boolean
+
+    @ApiProperty({example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',description:'Id кімнати'})
+    @Column({type:DataType.STRING,allowNull:false})
+    roomId:string
 }

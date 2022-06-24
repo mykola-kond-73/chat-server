@@ -22,7 +22,8 @@ export class UsersService {
             }
 
             const user = await this.userRepository.create(newDto)
-            return { userId: user.id }
+            if(user)return { userId: user.id }
+            else throw new HttpException('', HttpStatus.BAD_REQUEST)
         } catch (error) {
             throw new HttpException('Помилка при створенні користувача', HttpStatus.BAD_REQUEST)
         }
