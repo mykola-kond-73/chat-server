@@ -1,8 +1,8 @@
-type deleteRoomByIdType={
+type roomByIdType={
     roomId:string,
     userId:string
 }
 
 export {
-    deleteRoomByIdType
+    roomByIdType
 }

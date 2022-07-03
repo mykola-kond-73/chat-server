@@ -12,7 +12,9 @@ import { SocketsGateway } from './sockets/sockets.gateway';
 
 @Module({
   controllers: [],
-  providers: [SocketsGateway],
+  providers: [
+    // SocketsGateway
+  ],
   imports: [
     ConfigModule.forRoot(configOpt),
     SequelizeModule.forRoot({

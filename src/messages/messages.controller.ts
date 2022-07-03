@@ -6,10 +6,6 @@ import { GetMessagesDto } from './dto/get-messages.dto';
 import { MessagesService } from './messages.service';
 import { UpdateMessageDto } from './dto/update-message.dto';
 
-type T={
-    newMessage:string
-}
-
 @ApiTags('Повідомлення')
 // @UseGuards(AuthGuard)
 @Controller('messages')
@@ -18,10 +14,10 @@ export class MessagesController {
 
     }
 
-    // @Post()
-    // createMessage(@Body() body){
-    //     return this.messagesService.createMessage(body)
-    // }
+    @Post()
+    createMessage(@Body() body){
+        return this.messagesService.createMessage(body)
+    }
 
     @ApiOperation({summary:'Запит повідомлень за Id кімнати'})
     @ApiParam({name:'roomId',description:'Id кімнати',required:true,example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'})

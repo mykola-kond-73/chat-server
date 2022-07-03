@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { AuthModule } from 'src/auth/auth.module';
+import { Room } from 'src/rooms/rooms.model';
 import { MessagesController } from './messages.controller';
 import { Message } from './messages.model';
 import { MessagesService } from './messages.service';
@@ -10,7 +11,7 @@ import { MessagesService } from './messages.service';
   controllers:[MessagesController],
   providers: [MessagesService],
   imports:[
-    SequelizeModule.forFeature([Message]),
+    SequelizeModule.forFeature([Message,Room]),
     AuthModule
   ],
   exports:[MessagesService]

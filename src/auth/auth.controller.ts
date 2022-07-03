@@ -25,7 +25,7 @@ export class AuthController {
     @ApiOperation({summary:'Створення користувача'})
     @ApiResponse({status:201,description:'Користувач успішно створений',type:ResponceCreateUserDto})
     @ApiResponse({status:400,type:ErrorDto})
-    @UsePipes(ValidationPipe)
+    // @UsePipes(ValidationPipe)
     @Post('/register')
     register(@Body() dto:CreateUserDto){
         const user=this.authService.register(dto)

@@ -3,7 +3,7 @@ import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards, UsePipes 
 import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ErrorDto } from 'src/exceptions/dto/error.dto';
-import { deleteRoomByIdType } from 'src/utils/types/rooms';
+import { roomByIdType } from 'src/utils/types/rooms';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { ResponceCreateRoomDto } from './dto/responce-create-room.dto';
 import { RoomsService } from './rooms.service';
@@ -26,7 +26,7 @@ export class RoomsController {
         return this.roomsService.createRoom(dto)
     }
 
-    @ApiOperation({summary:'Створення кімнати'})
+    @ApiOperation({summary:'Отримання кімнат'})
     @ApiParam({name:'userId',description:'Id користувача',required:true,example:'9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'})
     @ApiResponse({status:200,description:'Успішний запит на всі чати користувача',type:[ResponceGetRoomsDto]})
     @ApiResponse({status:400,type:ErrorDto})
@@ -42,7 +42,7 @@ export class RoomsController {
     @ApiResponse({status:400,type:ErrorDto})
     @Delete(':roomId')
     deleteRoom(@Param('roomId') roomId, @Query('userId') userId){
-        const payload:deleteRoomByIdType={
+        const payload:roomByIdType={
             roomId,
             userId
         }

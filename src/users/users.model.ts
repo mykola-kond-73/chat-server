@@ -1,6 +1,6 @@
 import { BelongsToMany } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table,HasMany } from 'sequelize-typescript';
 
 interface UserCreateAttrs{
     id:string
@@ -27,7 +27,4 @@ export class User extends Model<User,UserCreateAttrs>{
     @ApiProperty({example:'user_1',description:'Ім`я користувача'})
     @Column({type:DataType.STRING,allowNull:false})
     name:string
-
-    // BelongsToMany(()=>)
-    // rooms:
 }

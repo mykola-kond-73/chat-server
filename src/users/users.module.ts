@@ -4,6 +4,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './users.model';
 import { AuthModule } from 'src/auth/auth.module';
+import { Room } from 'src/rooms/rooms.model';
 
 @Module({
   controllers:[UsersController],

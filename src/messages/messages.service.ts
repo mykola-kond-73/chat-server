@@ -34,6 +34,7 @@ export class MessagesService {
                 offset: (page - 1) * count, 
                 limit: count,
                 attributes: ['id','authorId','roomId','message','createdDate','isUpdate'],
+                include:{all:true}
             })
             
             if (messages.length != 0) return messages

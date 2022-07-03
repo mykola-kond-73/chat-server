@@ -8,15 +8,19 @@ import { queryLogger } from './utils/logger';
 import helmet from 'helmet'
 import { helmetOpt } from './utils/options/helmet';
 import { corsOpt } from './utils/options/cors';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import {join} from 'path'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { abortOnError: false });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { abortOnError: false });
   const PORT = process.env.PORT || 3000
 
   app.use(session(sessionOpt))
   app.enableCors(corsOpt)
   app.use(helmet(helmetOpt))
   app.useGlobalFilters(new DefaultExceptions())
+
+  app.useStaticAssets(join(__dirname,'..','public'))
 
   if (process.env.NODE_ENV === 'production') {
     app.use('*', (req, res, next) => {
