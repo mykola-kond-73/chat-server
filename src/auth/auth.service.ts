@@ -1,50 +1,65 @@
-import { JwtService } from '@nestjs/jwt';
-import { Injectable, HttpException, HttpStatus, UnauthorizedException } from '@nestjs/common';
-import { User } from 'src/users/users.model';
-import { UsersService } from 'src/users/users.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-const bcrypt = require('bcryptjs')
+import { Injectable, HttpStatus, UnauthorizedException, HttpException, } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { TokenService } from '../token/token.service';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService,
-        private jwtService: JwtService
-    ) {
+  constructor(
+    private usersService: UsersService,
+    private tokenService: TokenService
+  ) { }
 
+  async login(dto: LoginDto) {
+    const user = await this.usersService.validateUser(dto.email, dto.password);
+    const { accessToken, refreshToken } = this.tokenService.generateTokens(user);
+    
+    const saveTokenDto = {
+      userId: user.id,
+      refreshToken
     }
 
-    async login(autorizeStr, session) {
-        const [email, password] = autorizeStr.split(':')
-        const user = await this.validateUser(email, password)
-        const token = await this.genToken(user)
-        //! в продакшені
-        // session.auth = token
-        // return true
-        //!
-        return token
-    }
+    await this.tokenService.saveToken(saveTokenDto)
 
-    async register(dto: CreateUserDto) {
-        return await this.usersService.createUser(dto)
+    return {
+      userId: user.id,
+      accessToken,
+      refreshToken
     }
+  }
 
-    private async genToken(user: User) {
-        const payload = { emai: user.email, id: user.id, name: user.name }
-        const token = await this.jwtService.sign(payload)
-        return {
-            token: `Bearer:${token}`
-        }
-    }
+  async unlogin(token: string) {
+    if(!token) return true
+    const tokenData = await this.tokenService.removeToken(token)
+    if (!tokenData) throw new UnauthorizedException(HttpStatus.UNAUTHORIZED);
+    return true
+  }
 
-    private async validateUser(email, password) {
-        const candidate = await this.usersService.getUserByEmail(email)
-        if (!candidate) {
-            throw new HttpException('Користувач не знайдений', HttpStatus.BAD_REQUEST)
-        }
-        const passwordEquals = await bcrypt.compare(password, candidate.password)
-        if (!passwordEquals) {
-            throw new HttpException('Невірний пароль', HttpStatus.BAD_REQUEST)
-        }
-        return candidate
+  async register(dto: CreateUserDto) {
+    return await this.usersService.createUser(dto);
+  }
+
+  async refresh(token: string) {
+    if (!token) throw new HttpException('Ви не авторизовані', HttpStatus.BAD_REQUEST)
+
+    const userData = this.tokenService.validateRefreshToken(token)
+    const tokenFromDb = this.tokenService.findToken(token)
+
+    if (!userData || !tokenFromDb) throw new HttpException('Ви не авторизовані', HttpStatus.BAD_REQUEST)
+
+    const { accessToken, refreshToken } = this.tokenService.generateTokens(userData);
+
+    const saveTokenPayload = {
+      userId: userData.id,
+      refreshToken
     }
+    await this.tokenService.saveToken(saveTokenPayload)
+
+    return {
+      userId: userData.id,
+      accessToken,
+      refreshToken
+    };
+  }
 }

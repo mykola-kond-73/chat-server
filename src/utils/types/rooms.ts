@@ -1,8 +1,6 @@
-type roomByIdType={
-    roomId:string,
-    userId:string
-}
+type roomByIdType = {
+  roomId: string;
+  userId: string;
+};
 
-export {
-    roomByIdType
-}
+export { roomByIdType };

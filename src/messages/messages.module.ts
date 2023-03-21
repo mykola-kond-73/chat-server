@@ -1,19 +1,23 @@
-import { Module } from '@nestjs/common';
+import {MiddlewareConsumer,Module,NestModule,} from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { AuthModule } from 'src/auth/auth.module';
-import { Room } from 'src/rooms/rooms.model';
+import { AuthModule } from '../auth/auth.module';
+import { Room } from '../rooms/rooms.model';
+import { DecryptMiddleware } from './decrypt.middleware';
 import { MessagesController } from './messages.controller';
 import { Message } from './messages.model';
 import { MessagesService } from './messages.service';
 
 @Module({
-  controllers:[MessagesController],
+  controllers: [MessagesController],
   providers: [MessagesService],
-  imports:[
-    SequelizeModule.forFeature([Message,Room]),
-    AuthModule
+  imports: [
+    SequelizeModule.forFeature([Message, Room]),
+    AuthModule,
   ],
-  exports:[MessagesService]
+  exports: [MessagesService],
 })
-export class MessagesModule {}
+export class MessagesModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(DecryptMiddleware).forRoutes('messages');
+  }
+}

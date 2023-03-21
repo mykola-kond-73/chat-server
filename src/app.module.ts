@@ -9,29 +9,31 @@ import { MessagesModule } from './messages/messages.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { Message } from './messages/messages.model';
 import { SocketsGateway } from './sockets/sockets.gateway';
+import { Room } from './rooms/rooms.model';
+import { TokenModule } from './token/token.module';
+import { Token } from './token/token.model';
 
 @Module({
   controllers: [],
-  providers: [
-    // SocketsGateway
-  ],
+  providers: [SocketsGateway],
   imports: [
     ConfigModule.forRoot(configOpt),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: process.env.POSTGRES_HOST,
+      host:process.env.POSTGRES_HOST,
       port: Number(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASS,
       database: process.env.POSTGRES_DB,
-      models: [User,Message],
-      autoLoadModels: true
+      models: [User, Message, Room, Token],
+      autoLoadModels: true,
     }),
 
     UsersModule,
     AuthModule,
     MessagesModule,
-    RoomsModule
+    RoomsModule,
+    TokenModule
   ],
 })
-export class AppModule { }
+export class AppModule {}

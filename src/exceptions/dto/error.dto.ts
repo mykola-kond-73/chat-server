@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
-export class ErrorDto{
-    @ApiProperty({example:'Error text',description:'Опис помилки'})
-    readonly message:string
+export class ErrorDto {
+  @ApiProperty({ example: 'Error text', description: 'Опис помилки' })
+  readonly message: string;
 }
