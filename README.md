@@ -54,14 +54,25 @@
 In .env file musst be kyes:
 
 `PORT` - the port on which the server starts (5000)
+
 `POSTGRES_HOST` - database host (localhost)
+
 `POSTGRES_PASS` - database password
+
 `POSTGRES_USER` - database user
+
 `POSTGRES_DB` - database name
+
 `POSTGRES_PORT` - database port
+
 `PRIVATE_KEY_JWT_ACCESS_TOKEN` - secret key for the access token
+
 `PRIVATE_KEY_JWT_REFRESH_TOKEN` - secret key for the refresh token
+
 `ACCESS_TIKEN_LIFE_TIME` - time leave access token
+
 `REFRESH_TOKEN_LIFE_TIME` - time leave refresh token
+
 `SALT` - salt for bycrypt
+
 `SECRET_KEY_SESSION` - secret key for session
